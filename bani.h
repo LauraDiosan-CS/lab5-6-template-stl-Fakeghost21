@@ -17,6 +17,7 @@ public:
 	int getNumar();
 	void setNume(float nume);
 	void setNumar(int numar);
+	bool operator==(const Monede& t);
 	Monede& operator=(const Monede& t);
 	friend ostream& operator<<(ostream& os, const Monede& t);
 	friend istream& operator>>(istream& is, Monede& t);

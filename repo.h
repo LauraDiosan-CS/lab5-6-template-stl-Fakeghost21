@@ -17,13 +17,13 @@ public:
 	~RepoSTL();
 
 	//void setFileNameIn(const char* fileNameIn);
-	void clear();
-	void add(T p);
-	vector<T> getAll();
-	void update(T& oldPrajitura, T& newPrajitura);
-	void delete_t(T&);
-	int getSize();
-	T getPosEntity(int pos);
+	virtual void clear();
+	virtual void add(T p);
+	virtual vector<T> getAll();
+	virtual void update(T& oldPrajitura, T& newPrajitura);
+	virtual void delete_t(T&);
+	virtual int getSize();
+	virtual T getPosEntity(int pos);
 	//void loadFromFile();
 	//void saveToFile();
 
@@ -79,23 +79,17 @@ template <class T> int RepoSTL<T>::getSize()
 
 template <class T> T RepoSTL<T>::getPosEntity(int pos)
 {
-	if (pos < 0 or pos > this->entity.size() - 1)
-	{
-		string emptyName = "";
-		string emptyIngrediente = "";
-		return Prajitura(0, emptyName, emptyIngrediente, 0);
-	}
 	return this->entity[pos];
 }
 
 template <class T> void RepoSTL<T>::update(T& oldPrajitura, T& newPrajitura)
 {
-	for (int i = 0; i < this->entity.size(); i++)
+	typename vector<T>::iterator it;
+
+	it = find(this->entity.begin(), this->entity.end(), oldPrajitura);
+	if (!(it == this->entity.end()))
 	{
-		if (this->entity[i] == oldPrajitura)
-		{
-			this->entity[i] = newPrajitura;
-		}
+		*it = newPrajitura;
 	}
 
 	//this->saveToFile();
@@ -103,7 +97,7 @@ template <class T> void RepoSTL<T>::update(T& oldPrajitura, T& newPrajitura)
 
 template <class T> void RepoSTL<T>::delete_t(T& p)
 {
-	vector<Prajitura>::iterator it;
+	typename vector<T>::iterator it;
 
 	it = find(this->entity.begin(), this->entity.end(), p);
 	if (!(it == this->entity.end()))

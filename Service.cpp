@@ -2,9 +2,11 @@
 
 Service::Service()
 {
+	this->r = new RepoSTL<Prajitura>;
+	this->m = new RepoSTL<Monede>;
 }
 
-Service::Service(Repo<Prajitura>& repo,Repo<Monede>& repo2)
+Service::Service(RepoSTL<Prajitura>*& repo,RepoSTL<Monede>*& repo2)
 {
 	this->r = repo;
 	this->m = repo2;
@@ -14,7 +16,7 @@ Service::~Service()
 {
 }
 
-void Service::setRepo(Repo<Prajitura> repo,Repo<Monede> repo2)
+void Service::setRepo(RepoSTL<Prajitura>* repo,RepoSTL<Monede>* repo2)
 {
 	this->r = repo;
 	this->m = repo2;
@@ -22,23 +24,23 @@ void Service::setRepo(Repo<Prajitura> repo,Repo<Monede> repo2)
 
 void Service::addPrajitura(int id,const string nume,const string ingrediente, double pret)
 {
-	this->r.addPrajitura(Prajitura(id,nume,ingrediente,pret));
+	this->r->add(Prajitura(id,nume,ingrediente,pret));
 }
 
 vector<Prajitura> Service::getAllCandy()
 {
-	return this->r.getAll();
+	return this->r->getAll();
 }
 
 Prajitura Service::getPrajituraAtPosition(int pos)
 {
-	return this->r.getPosPrajitura(pos);
+	return this->r->getPosEntity(pos);
 }
 
 Prajitura Service::getPrajituraById(int id)
 {	
-	vector<Prajitura> prajituri = this->r.getAll();
-	for (int i = 0; i < this->r.getSize(); i++)
+	vector<Prajitura> prajituri = this->r->getAll();
+	for (int i = 0; i < this->r->getSize(); i++)
 	{
 		if (prajituri[i].getId() == id)
 		{
@@ -49,14 +51,14 @@ Prajitura Service::getPrajituraById(int id)
 
 void Service::updatePrajituraById(int id, const string newName, const string newIngrediente, double newPret)
 {
-	vector<Prajitura> prajituri = this->r.getAll();
+	vector<Prajitura> prajituri = this->r->getAll();
 	Prajitura newPrajitura(id,newName,newIngrediente,newPret);
-	for (int i = 0; i < this->r.getSize(); i++)
+	for (int i = 0; i < this->r->getSize(); i++)
 	{
 		if (prajituri[i].getId() == id)
 		{
 			Prajitura oldPrajitura(id,prajituri[i].getNume(), prajituri[i].getIngrediente(), prajituri[i].getPret());
-			this->r.updatePrajitura(oldPrajitura, newPrajitura);
+			this->r->update(oldPrajitura, newPrajitura);
 			return;
 		}
 	}
@@ -64,13 +66,13 @@ void Service::updatePrajituraById(int id, const string newName, const string new
 
 void Service::deletePrajituraById(int id)
 {
-	vector<Prajitura> prajituri = this->r.getAll();
-	for (int i = 0; i < this->r.getSize(); i++)
+	vector<Prajitura> prajituri = this->r->getAll();
+	for (int i = 0; i < this->r->getSize(); i++)
 	{
 		if (prajituri[i].getId() == id)
 		{
 			Prajitura prajDel(id, prajituri[i].getNume(), prajituri[i].getIngrediente(), prajituri[i].getPret());
-			this->r.deletePrajitura(prajDel);
+			this->r->delete_t(prajDel);
 			return;
 		}
 	}
@@ -78,11 +80,11 @@ void Service::deletePrajituraById(int id)
 
 void Service::deletePrajituraByPosition(int pos)
 {
-	Prajitura prajDel = this->r.getPosPrajitura(pos);
-	this->r.deletePrajitura(prajDel);
+	Prajitura prajDel = this->r->getPosEntity(pos);
+	this->r->delete_t(prajDel);
 }
 
 vector<Monede> Service::getAllMonede()
 {
-	return this->m.getAll();
+	return this->m->getAll();
 }

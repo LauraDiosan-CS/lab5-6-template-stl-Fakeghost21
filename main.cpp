@@ -14,8 +14,10 @@ int main()
 	//RepoSTL r("TestTonomatIn.txt", "TestTonomatOut.txt");
 	//Tonomat t3("2h3208#", "Telefon", 2300);
 	//r.addTonomat(t3);
-	Repo<Prajitura> r("TestTonomatIn.txt");
-	Repo<Monede> m("Monede.txt");
+	RepoSTL<Prajitura>* r;
+	RepoSTL<Monede>* m;
+	r = new Repo<Prajitura>("TestTonomatIn.txt");
+	m= new Repo<Monede>("Monede.txt");
 	Service s(r,m);
 	UI ui(s);
 	ui.runUI();

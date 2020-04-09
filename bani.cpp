@@ -64,3 +64,8 @@ istream& operator>>(istream& is, Monede& t)
 	is >> t.nume >> t.numar;
 	return is;
 }
+
+bool Monede::operator==(const Monede& t)
+{
+	return this->nume == t.nume and this->numar == t.nume;
+}

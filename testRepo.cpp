@@ -97,8 +97,10 @@ void testeRepo()
 
 void testService()
 {	
-	Repo<Prajitura> r("TesteServicePraji.txt");
-	Repo<Monede> m("TesteServiceBani.txt");
+	RepoSTL<Prajitura>* r;
+	RepoSTL<Monede>* m;
+	r = new Repo<Prajitura>("TesteService.txt");
+	m = new Repo<Monede>("TesteServiceBani.txt");
 	Service s(r,m);
 	char* code1 = new char[10];
 	char* code2 = new char[10];
