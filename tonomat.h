@@ -1,5 +1,6 @@
 #pragma once
 #include <ostream>
+#include <istream>
 using namespace std;
 
 class Prajitura {
@@ -24,4 +25,5 @@ public:
 	Prajitura& operator=(const Prajitura& t);
 	bool operator==(const Prajitura& t);
 	friend ostream& operator<<(ostream& os, const Prajitura& t);
+	friend istream& operator>>(istream& is, Prajitura& t);
 };

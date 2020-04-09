@@ -1,5 +1,6 @@
 #include "tonomat.h"
 #include <string.h>
+using namespace std;
 
 Prajitura::Prajitura()
 {
@@ -43,6 +44,11 @@ string Prajitura::getNume()
 	return this->nume;
 }
 
+string Prajitura::getIngrediente()
+{
+	return this->ingrediente;
+}
+
 double Prajitura::getPret()
 {
 	return this->pret;
@@ -84,6 +90,14 @@ bool Prajitura::operator==(const Prajitura& t)
 
 ostream& operator<<(ostream& os, const Prajitura& t)
 {
-	os << t.id << " : " << t.nume << " " << t.ingrediente<< " " << t.pret << endl;
+	os << t.id << " " << t.nume << " " << t.ingrediente<< " " << t.pret << endl;
 	return os;
 }
+
+istream& operator>>(istream& is, Prajitura& t)
+{
+	// TODO: insert return statement here
+	is >> t.id >> t.nume >> t.ingrediente>> t.pret;
+	return is;
+}
+
