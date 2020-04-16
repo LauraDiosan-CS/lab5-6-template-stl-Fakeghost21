@@ -1,4 +1,7 @@
 #include "Service.h"
+#include <string.h>
+#include <utility>
+
 
 Service::Service()
 {
@@ -87,4 +90,44 @@ void Service::deletePrajituraByPosition(int pos)
 vector<Monede> Service::getAllMonede()
 {
 	return this->m->getAll();
+}
+
+map<string,tuple<double,int>> Service::getAllIngrediente()
+{
+	vector<Prajitura> prajituri = this->r->getAll();
+	map <string, tuple<double,int>> m;
+	string ingred;
+	for (int i = 0; i < this->r->getSize(); i++)
+	{
+		ingred = prajituri[i].getIngrediente();
+
+		string token, sep = ",";
+		size_t pos;
+		do {
+			pos = ingred.find(sep);
+			token = ingred.substr(0, pos);
+			if (m.find(token) == m.end())
+			{
+				double value = prajituri[i].getPret();
+				tuple <double, int> t(value, 1);
+				m[token] = t;
+			}
+			else {
+				get<0>(m.find(token)->second) += prajituri[i].getPret();
+				get<1>(m.find(token)->second)++;
+			}
+			ingred.erase(0, pos + sep.length());
+		} while (pos != string::npos);
+	}
+	return m;
+}
+
+void Service::afisIngrediente(map<string, tuple<double, int>> m)
+{
+	map<string, tuple<double, int>>::iterator it = m.begin();
+	while (it != m.end())
+	{
+		cout << it->first << " :: " << get<0>(it->second) / get<1>(it->second)<< endl;
+		it++;
+	}
 }

@@ -9,6 +9,7 @@ int main()
 {	
 	testeEntitate();
 	testeRepo();
+	testFunctionalitate();
 	service();
 	//test_repoST_accounts();
 	//RepoSTL r("TestTonomatIn.txt", "TestTonomatOut.txt");
@@ -16,8 +17,8 @@ int main()
 	//r.addTonomat(t3);
 	RepoSTL<Prajitura>* r;
 	RepoSTL<Monede>* m;
-	r = new Repo<Prajitura>("TestTonomatIn.txt");
-	m= new Repo<Monede>("Monede.txt");
+	r = new RepoFile<Prajitura>("TestTonomatIn.txt");
+	m= new RepoFile<Monede>("Monede.txt");
 	Service s(r,m);
 	UI ui(s);
 	ui.runUI();

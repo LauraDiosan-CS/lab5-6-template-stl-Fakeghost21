@@ -21,6 +21,7 @@ void UI::displayMenu()
 		<< "3.Sterge o prajitura dupa id : \n"
 		<< "4.Update la o prajitura dupa id : \n"
 		<< "5.Cantitatea de monede detinuta de aparat cat si suma totala : \n"
+		<< "6.Toate ingredientele : \n"
 		<< "x.Iesire!\n";
 }
 
@@ -85,17 +86,17 @@ void UI::runUI()
 			cin >> pret;
 			this->AddPrajitura(id,nume,ingrediente,pret);
 		}
-		if (optiune == "2")
+		else if (optiune == "2")
 		{
 			this->ShowAllCandy();
 		}
-		if (optiune == "3")
+		else if (optiune == "3")
 		{	
 			cout << "Id-ul prajiturii pe care doriti sa o stergeti : ";
 			cin >> id;
 			this->DeleteByID(id);
 		}
-		if (optiune == "4")
+		else if (optiune == "4")
 		{
 			cout << "Id-ul prajiturii pentru update : ";
 			cin >> id;
@@ -107,11 +108,16 @@ void UI::runUI()
 			cin >> pret;
 			this->UpdateByID(id, nume, ingrediente, pret);
 		}
-		if (optiune == "5")
+		else if (optiune == "5")
 		{	
 			this->ShowALLMonede();
 		}
-		if (optiune == "x")
+		else if (optiune == "6")
+		{
+			service.afisIngrediente(service.getAllIngrediente());
+			//service.getAllIngrediente();
+		}
+		else if (optiune == "x")
 		{
 			cout << "Ati iesit din program!\n";
 			break;

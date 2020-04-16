@@ -9,35 +9,35 @@
 #include "repo.h"
 using namespace std;
 template <class T>
-class Repo : public RepoSTL<T>
+class RepoFile : public RepoSTL<T>
 {
 private:
 	char* fileNameIn;
 public:
-	Repo();
-	Repo(const char* fileNameIn);
-	~Repo();
+	RepoFile();
+	RepoFile(const char* fileNameIn);
+	~RepoFile();
 
 	void setFileNameIn(const char* fileNameIn);
-	void addPrajitura(T p);
+	void add(T p);
 	vector<T> getAll();
-	void updatePrajitura(T& oldPrajitura, T& newPrajitura);
-	void deletePrajitura(T&);
+	void update(T& oldObj, T& newObj);
+	void delete_t(T&);
 	int getSize();
-	T getPosPrajitura(int pos);
+	T getPosEntity(int pos);
 	void loadFromFile();
 	void saveToFile();
-
+	void clear();
 };
 
 template<class T>
-inline Repo<T>::Repo()
+inline RepoFile<T>::RepoFile()
 {
 	this->fileNameIn = NULL;
 }
 
 template<class T>
-inline Repo<T>::Repo(const char* fileNameIn)
+inline RepoFile<T>::RepoFile(const char* fileNameIn)
 {
 	this->fileNameIn = new char[strlen(fileNameIn) + 1];
 	strcpy_s(this->fileNameIn, strlen(fileNameIn) + 1, fileNameIn);
@@ -45,13 +45,13 @@ inline Repo<T>::Repo(const char* fileNameIn)
 }
 
 template<class T>
-inline Repo<T>::~Repo()
+inline RepoFile<T>::~RepoFile()
 {
 
 }
 
 template<class T>
-inline void Repo<T>::setFileNameIn(const char* fileNameIn)
+inline void RepoFile<T>::setFileNameIn(const char* fileNameIn)
 {
 	if (this->fileNameIn != NULL)
 	{
@@ -62,46 +62,46 @@ inline void Repo<T>::setFileNameIn(const char* fileNameIn)
 }
 
 template<class T>
-inline void Repo<T>::addPrajitura(T p)
+inline void RepoFile<T>::add(T p)
 {
 	RepoSTL<T>::add(p);
 	this->saveToFile();
 }
 
 template<class T>
-inline vector<T> Repo<T>::getAll()
+inline vector<T> RepoFile<T>::getAll()
 {
 	return RepoSTL<T>::getAll();
 }
 
 template<class T>
-inline void Repo<T>::updatePrajitura(T& oldPrajitura, T& newPrajitura)
+inline void RepoFile<T>::update(T& oldPrajitura, T& newPrajitura)
 {
 	RepoSTL<T>::update(oldPrajitura, newPrajitura);
 	this->saveToFile();
 }
 
 template<class T>
-inline void Repo<T>::deletePrajitura(T&p)
+inline void RepoFile<T>::delete_t(T&p)
 {
 	RepoSTL<T>::delete_t(p);
 	this->saveToFile();
 }
 
 template<class T>
-inline int Repo<T>::getSize()
+inline int RepoFile<T>::getSize()
 {
 	return RepoSTL<T>::getSize();
 }
 
 template<class T>
-inline T Repo<T>::getPosPrajitura(int pos)
+inline T RepoFile<T>::getPosEntity(int pos)
 {
 	return RepoSTL<T>::getPosEntity(pos);
 }
 
 template<class T>
-inline void Repo<T>::loadFromFile()
+inline void RepoFile<T>::loadFromFile()
 {
 	if (this->fileNameIn != NULL)
 	{
@@ -117,17 +117,24 @@ inline void Repo<T>::loadFromFile()
 }
 
 template<class T>
-inline void Repo<T>::saveToFile()
+inline void RepoFile<T>::saveToFile()
 {
 	if (this->fileNameIn != NULL)
 	{
 		ofstream f(this->fileNameIn);
-		int n = this->getSize();
+		int n = RepoSTL<T>::getSize();
 		for (int i = 0; i < n; i++)
-		{
-			f << this->getAll()[i];
+		{	
+			f << RepoSTL<T>::getPosEntity(i);
 		}
 		f.close();
 	}
+}
+
+template<class T>
+inline void RepoFile<T>::clear()
+{
+	RepoSTL<T>::clear();
+	this->saveToFile();
 }
 

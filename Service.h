@@ -2,6 +2,7 @@
 #include "repo.h"
 #include "repoFisiere.h"
 #include "bani.h"
+#include <map>
 
 class Service {
 private:
@@ -24,5 +25,9 @@ public:
 	void deletePrajituraByPosition(int pos);
 		
 	vector<Monede> getAllMonede();
+
+	map<string, tuple<double, int>> getAllIngrediente();
+	//void getAllIngrediente();
+	void afisIngrediente(map<string, tuple<double, int>>);
 
 };
